@@ -1,0 +1,954 @@
+/* ============================================================
+   "A Little Something for You" — Design System
+   ============================================================ */
+
+/* ---------- Reset & Base ---------- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+:root {
+  /* Color Palette */
+  --bg-deep: #0a0a1a;
+  --bg-section: #0d0d28;
+  --bg-card: #151538;
+  --pink: #ff6b9d;
+  --pink-soft: #ffb3d0;
+  --rose: #f472b6;
+  --lavender: #c4b5fd;
+  --purple: #8b5cf6;
+  --purple-deep: #6d28d9;
+  --gold: #fbbf24;
+  --gold-soft: #fde68a;
+  --white: #f0eeff;
+  --white-dim: rgba(240, 238, 255, 0.7);
+  --white-muted: rgba(240, 238, 255, 0.45);
+
+  /* Glassmorphism */
+  --glass-bg: rgba(255, 255, 255, 0.04);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --glass-blur: 24px;
+
+  /* Typography */
+  --font-display: 'Playfair Display', serif;
+  --font-hand: 'Dancing Script', cursive;
+  --font-body: 'Inter', sans-serif;
+
+  /* Spacing */
+  --section-py: clamp(80px, 12vh, 140px);
+  --section-px: clamp(20px, 5vw, 80px);
+
+  /* Transitions */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-back: cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background: var(--bg-deep);
+  color: var(--white);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--bg-deep);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--purple);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--lavender);
+}
+
+/* ---------- Typography ---------- */
+h1, h2, h3 {
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.text-hand {
+  font-family: var(--font-hand);
+  font-weight: 400;
+}
+
+.text-gradient {
+  background: linear-gradient(135deg, var(--pink), var(--lavender), var(--pink-soft));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-glow {
+  text-shadow:
+    0 0 20px rgba(255, 107, 157, 0.4),
+    0 0 40px rgba(196, 181, 253, 0.2);
+}
+
+.text-glow-gold {
+  text-shadow:
+    0 0 20px rgba(251, 191, 36, 0.4),
+    0 0 40px rgba(251, 191, 36, 0.15);
+}
+
+/* ---------- Glass Card ---------- */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(var(--glass-blur));
+  -webkit-backdrop-filter: blur(var(--glass-blur));
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+}
+
+.glass-glow {
+  box-shadow:
+    0 0 30px rgba(139, 92, 246, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+}
+
+/* ---------- Buttons ---------- */
+.btn-magic {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 16px 40px;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--white);
+  background: linear-gradient(135deg, var(--purple), var(--pink));
+  border: none;
+  border-radius: 60px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.4s var(--ease-out-back), box-shadow 0.4s var(--ease-smooth);
+  z-index: 1;
+}
+
+.btn-magic::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--pink), var(--purple-deep));
+  opacity: 0;
+  transition: opacity 0.4s var(--ease-smooth);
+  z-index: -1;
+}
+
+.btn-magic:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow:
+    0 0 30px rgba(139, 92, 246, 0.4),
+    0 0 60px rgba(255, 107, 157, 0.2);
+}
+
+.btn-magic:hover::before {
+  opacity: 1;
+}
+
+.btn-magic:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+/* Shimmer sweep */
+.btn-magic::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.15),
+    transparent
+  );
+  animation: shimmerSweep 3s infinite;
+}
+
+.btn-outline {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 36px;
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--lavender);
+  background: transparent;
+  border: 1px solid rgba(196, 181, 253, 0.3);
+  border-radius: 60px;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-smooth);
+}
+
+.btn-outline:hover {
+  background: rgba(196, 181, 253, 0.08);
+  border-color: var(--lavender);
+  box-shadow: 0 0 25px rgba(196, 181, 253, 0.15);
+  transform: translateY(-2px);
+}
+
+/* ---------- Section Layout ---------- */
+.section {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: var(--section-py) var(--section-px);
+  overflow: hidden;
+}
+
+.section-content {
+  max-width: 800px;
+  width: 100%;
+  text-align: center;
+  z-index: 2;
+}
+
+/* Section divider gradient */
+.section + .section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(196, 181, 253, 0.2),
+    rgba(255, 107, 157, 0.2),
+    transparent
+  );
+}
+
+/* ============================================================
+   SECTION 1: OPENING CINEMATIC
+   ============================================================ */
+#opening {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--bg-deep);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.8s var(--ease-smooth);
+}
+
+#opening.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+#opening-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.opening-text {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+}
+
+.opening-line {
+  font-family: var(--font-hand);
+  font-size: clamp(1.6rem, 4vw, 2.8rem);
+  color: var(--white);
+  opacity: 0;
+  margin-bottom: 12px;
+  letter-spacing: 0.5px;
+}
+
+.opening-line.sub {
+  font-family: var(--font-body);
+  font-size: clamp(0.95rem, 2vw, 1.15rem);
+  color: var(--white-muted);
+  margin-top: 8px;
+}
+
+.opening-heart {
+  font-size: clamp(3rem, 6vw, 4.5rem);
+  opacity: 0;
+  margin: 30px 0;
+  display: inline-block;
+  filter: drop-shadow(0 0 20px rgba(255, 107, 157, 0.6));
+}
+
+#enter-btn {
+  opacity: 0;
+  margin-top: 30px;
+}
+
+/* ============================================================
+   SECTION 2: HERO
+   ============================================================ */
+#hero {
+  min-height: 100vh;
+  background:
+    radial-gradient(ellipse at 20% 50%, rgba(139, 92, 246, 0.08) 0%, transparent 60%),
+    radial-gradient(ellipse at 80% 30%, rgba(255, 107, 157, 0.06) 0%, transparent 60%),
+    var(--bg-deep);
+}
+
+.hero-headline {
+  font-size: clamp(2.2rem, 5.5vw, 4.2rem);
+  margin-bottom: 20px;
+  letter-spacing: -0.5px;
+}
+
+.hero-sub {
+  font-family: var(--font-hand);
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: var(--white-dim);
+  margin-bottom: 50px;
+}
+
+/* Interactive heart */
+.hero-heart-wrap {
+  position: relative;
+  width: clamp(180px, 30vw, 280px);
+  height: clamp(180px, 30vw, 280px);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-heart {
+  font-size: clamp(6rem, 14vw, 10rem);
+  filter: drop-shadow(0 0 40px rgba(255, 107, 157, 0.5));
+  transition: transform 0.15s var(--ease-smooth);
+  will-change: transform;
+  user-select: none;
+}
+
+.hero-heart-ring {
+  position: absolute;
+  inset: -20px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 107, 157, 0.15);
+  animation: pulseRing 3s ease-in-out infinite;
+}
+
+.hero-heart-ring:nth-child(2) {
+  inset: -40px;
+  animation-delay: 0.5s;
+  border-color: rgba(196, 181, 253, 0.1);
+}
+
+.hero-heart-ring:nth-child(3) {
+  inset: -60px;
+  animation-delay: 1s;
+  border-color: rgba(139, 92, 246, 0.06);
+}
+
+/* Cursor particles container */
+#cursor-particles {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9999;
+}
+
+.cursor-particle {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  pointer-events: none;
+  will-change: transform, opacity;
+}
+
+/* ============================================================
+   SECTION 3: MEMORY TIMELINE
+   ============================================================ */
+#memories {
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(139, 92, 246, 0.06) 0%, transparent 50%),
+    var(--bg-section);
+}
+
+.memories-title {
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  margin-bottom: 16px;
+}
+
+.memories-sub {
+  font-size: clamp(1rem, 2vw, 1.15rem);
+  color: var(--white-muted);
+  margin-bottom: 60px;
+}
+
+.timeline {
+  display: flex;
+  gap: 24px;
+  padding: 20px 0;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+  scrollbar-width: none;
+}
+
+.timeline::-webkit-scrollbar {
+  display: none;
+}
+
+/* Timeline line */
+.timeline-track {
+  position: relative;
+  margin-bottom: 40px;
+}
+
+.timeline-track::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--purple), var(--pink), var(--purple), transparent);
+  opacity: 0.3;
+}
+
+/* Flip card */
+.flip-card {
+  flex: 0 0 260px;
+  height: 340px;
+  perspective: 1200px;
+  scroll-snap-align: center;
+  cursor: pointer;
+}
+
+.flip-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transition: transform 0.8s var(--ease-out-expo);
+  transform-style: preserve-3d;
+}
+
+.flip-card.flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
+
+.flip-card-front,
+.flip-card-back {
+  position: absolute;
+  inset: 0;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  border-radius: 24px;
+  padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.flip-card-front {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.12), rgba(255, 107, 157, 0.08));
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.flip-card-front .card-icon {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 12px rgba(255, 107, 157, 0.4));
+}
+
+.flip-card-front .card-label {
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  color: var(--white-dim);
+}
+
+.flip-card-front .card-hint {
+  font-size: 0.8rem;
+  color: var(--white-muted);
+  margin-top: 16px;
+  opacity: 0.6;
+}
+
+.flip-card-back {
+  background: linear-gradient(135deg, rgba(255, 107, 157, 0.15), rgba(139, 92, 246, 0.15));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  transform: rotateY(180deg);
+}
+
+.flip-card-back .card-message {
+  font-family: var(--font-hand);
+  font-size: clamp(1.2rem, 2.5vw, 1.5rem);
+  color: var(--white);
+  line-height: 1.6;
+}
+
+.flip-card:hover .flip-card-front {
+  border-color: rgba(255, 107, 157, 0.25);
+  box-shadow: 0 0 30px rgba(139, 92, 246, 0.12);
+}
+
+/* ============================================================
+   SECTION 4: COMPLIMENT GENERATOR
+   ============================================================ */
+#compliments {
+  background:
+    radial-gradient(ellipse at 70% 50%, rgba(255, 107, 157, 0.05) 0%, transparent 60%),
+    var(--bg-deep);
+}
+
+.compliment-title {
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  margin-bottom: 12px;
+}
+
+.compliment-sub {
+  font-family: var(--font-hand);
+  font-size: clamp(1.1rem, 2.5vw, 1.4rem);
+  color: var(--white-muted);
+  margin-bottom: 50px;
+}
+
+.compliment-display {
+  min-height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 40px;
+  padding: 30px;
+}
+
+.compliment-text {
+  font-family: var(--font-hand);
+  font-size: clamp(1.5rem, 4vw, 2.4rem);
+  color: var(--pink-soft);
+  text-shadow: 0 0 30px rgba(255, 107, 157, 0.3);
+  opacity: 0;
+  min-height: 1.5em;
+}
+
+.compliment-text.visible {
+  opacity: 1;
+}
+
+#compliment-btn {
+  font-size: 1.1rem;
+}
+
+/* ============================================================
+   SECTION 5: INTERACTIVE HEART
+   ============================================================ */
+#interactive-heart {
+  background:
+    radial-gradient(ellipse at 50% 50%, rgba(255, 107, 157, 0.06) 0%, transparent 50%),
+    var(--bg-section);
+}
+
+.tap-title {
+  font-size: clamp(1.4rem, 3vw, 2rem);
+  color: var(--white-dim);
+  margin-bottom: 40px;
+}
+
+.big-heart-wrap {
+  position: relative;
+  cursor: pointer;
+  user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.big-heart {
+  font-size: clamp(8rem, 20vw, 14rem);
+  display: inline-block;
+  transition: filter 0.3s;
+  filter: drop-shadow(0 0 40px rgba(255, 107, 157, 0.5));
+  will-change: transform;
+}
+
+.big-heart:hover {
+  filter: drop-shadow(0 0 60px rgba(255, 107, 157, 0.7));
+}
+
+.heart-counter {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  color: var(--white-muted);
+  margin-top: 20px;
+  transition: opacity 0.4s;
+}
+
+.heart-counter span {
+  color: var(--pink);
+  font-weight: 600;
+}
+
+.heart-easter-egg {
+  font-family: var(--font-hand);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: var(--pink-soft);
+  margin-top: 24px;
+  opacity: 0;
+  text-shadow: 0 0 20px rgba(255, 107, 157, 0.3);
+}
+
+/* Heart burst particles canvas */
+#heart-particles-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ============================================================
+   SECTION 6: SECRET MESSAGE
+   ============================================================ */
+#secret {
+  background: var(--bg-deep);
+}
+
+.secret-prompt {
+  margin-bottom: 40px;
+}
+
+.secret-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 44px;
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--gold);
+  background: transparent;
+  border: 1px solid rgba(251, 191, 36, 0.25);
+  border-radius: 60px;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.5s var(--ease-smooth);
+  animation: glowPulse 3s ease-in-out infinite;
+}
+
+.secret-btn:hover {
+  background: rgba(251, 191, 36, 0.08);
+  border-color: rgba(251, 191, 36, 0.5);
+  box-shadow: 0 0 40px rgba(251, 191, 36, 0.15);
+  transform: translateY(-3px);
+}
+
+.secret-reveal {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 1s var(--ease-out-expo), opacity 0.8s var(--ease-smooth);
+}
+
+.secret-reveal.active {
+  opacity: 1;
+  max-height: 400px;
+}
+
+.secret-main-text {
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 3.5vw, 2.2rem);
+  margin-bottom: 20px;
+  line-height: 1.4;
+}
+
+.secret-sub-text {
+  font-family: var(--font-hand);
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: var(--lavender);
+}
+
+/* ============================================================
+   SECTION 7: FINALE
+   ============================================================ */
+#finale {
+  min-height: 100vh;
+  background: var(--bg-deep);
+  position: relative;
+}
+
+#finale-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.finale-moon {
+  position: absolute;
+  top: 8%;
+  right: 15%;
+  width: clamp(60px, 10vw, 100px);
+  height: clamp(60px, 10vw, 100px);
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #fef3c7, #fde68a);
+  box-shadow:
+    0 0 40px rgba(253, 230, 138, 0.4),
+    0 0 80px rgba(253, 230, 138, 0.2),
+    0 0 120px rgba(253, 230, 138, 0.1);
+  z-index: 1;
+}
+
+.finale-text {
+  position: relative;
+  z-index: 2;
+}
+
+.finale-line {
+  opacity: 0;
+  margin-bottom: 16px;
+}
+
+.finale-line.main {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 3rem);
+}
+
+.finale-line.sub {
+  font-family: var(--font-hand);
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  color: var(--white-dim);
+}
+
+.finale-line.credit {
+  font-family: var(--font-body);
+  font-size: clamp(0.85rem, 1.8vw, 1rem);
+  color: var(--white-muted);
+  margin-top: 30px;
+}
+
+#replay-btn {
+  opacity: 0;
+  margin-top: 50px;
+}
+
+/* Floating flower petals */
+.petal {
+  position: absolute;
+  font-size: 1.4rem;
+  opacity: 0;
+  pointer-events: none;
+  z-index: 1;
+  will-change: transform;
+}
+
+/* ============================================================
+   MUSIC CONTROLS
+   ============================================================ */
+.music-toggle {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--white-dim);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s var(--ease-smooth);
+  opacity: 0;
+}
+
+.music-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.2);
+  transform: scale(1.1);
+}
+
+.music-toggle.playing {
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.15);
+}
+
+/* ============================================================
+   SCROLL REVEAL ANIMATION STATES
+   ============================================================ */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal-delay-1 { transition-delay: 0.15s; }
+.reveal-delay-2 { transition-delay: 0.3s; }
+.reveal-delay-3 { transition-delay: 0.45s; }
+.reveal-delay-4 { transition-delay: 0.6s; }
+.reveal-delay-5 { transition-delay: 0.75s; }
+
+/* ============================================================
+   KEYFRAME ANIMATIONS
+   ============================================================ */
+@keyframes pulseRing {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.08); }
+}
+
+@keyframes heartPulse {
+  0%, 100% { transform: scale(1); }
+  15% { transform: scale(1.15); }
+  30% { transform: scale(1); }
+  45% { transform: scale(1.08); }
+}
+
+@keyframes shimmerSweep {
+  0% { left: -100%; }
+  100% { left: 200%; }
+}
+
+@keyframes glowPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(251, 191, 36, 0.08);
+  }
+  50% {
+    box-shadow: 0 0 30px rgba(251, 191, 36, 0.18), 0 0 60px rgba(251, 191, 36, 0.06);
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px) rotate(0deg); }
+  33% { transform: translateY(-12px) rotate(3deg); }
+  66% { transform: translateY(6px) rotate(-2deg); }
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 1; }
+}
+
+@keyframes floatPetal {
+  0% {
+    opacity: 0;
+    transform: translateY(-10vh) translateX(0) rotate(0deg);
+  }
+  10% { opacity: 0.7; }
+  90% { opacity: 0.7; }
+  100% {
+    opacity: 0;
+    transform: translateY(110vh) translateX(100px) rotate(360deg);
+  }
+}
+
+/* ============================================================
+   RESPONSIVE
+   ============================================================ */
+@media (max-width: 768px) {
+  .timeline {
+    gap: 16px;
+    padding: 16px 20px;
+  }
+
+  .flip-card {
+    flex: 0 0 220px;
+    height: 300px;
+  }
+
+  .btn-magic {
+    padding: 14px 32px;
+    font-size: 1rem;
+  }
+
+  .section {
+    padding: var(--section-py) 24px;
+  }
+
+  .finale-moon {
+    right: 10%;
+    top: 5%;
+  }
+
+  .music-toggle {
+    bottom: 16px;
+    right: 16px;
+    width: 42px;
+    height: 42px;
+  }
+}
+
+@media (max-width: 480px) {
+  .flip-card {
+    flex: 0 0 200px;
+    height: 280px;
+  }
+
+  .flip-card-front .card-icon {
+    font-size: 2.2rem;
+  }
+
+  .hero-heart-ring:nth-child(3) {
+    display: none;
+  }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.2s !important;
+  }
+
+  html {
+    scroll-behavior: auto;
+  }
+
+  .cursor-particle,
+  .petal {
+    display: none !important;
+  }
+
+  .hero-heart {
+    transition: none;
+  }
+
+  .btn-magic::after {
+    display: none;
+  }
+}
